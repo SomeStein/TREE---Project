@@ -55,6 +55,10 @@ cover/
 *.mo
 *.pot
 
+# VSCode stuff
+.vscode
+#!.vscode/launch.json
+
 # Django stuff:
 *.log
 local_settings.py

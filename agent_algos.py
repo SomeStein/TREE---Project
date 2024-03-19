@@ -2,7 +2,7 @@
 from list of positions to new list of positions in the form of [(,),...,(,)]
 '''
 import random
-import time
+from numba import njit, jit
 import numpy as np
 
 rng = np.random.default_rng()

@@ -30,7 +30,7 @@ class Framework:
         # Convert the coo_matrix to csr_matrix if needed (sums duplicates automatically)
         return sparse_matrix.tocsr()
 
-    def simulate(self, algo):
+    def monte_carlo(self, algo):
 
         start_time = time.time()
 
