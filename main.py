@@ -1,30 +1,24 @@
+import random
 from simulation import *
-import cProfile
+import matplotlib.pyplot as plt
 
 
-width = 60000
-height = 60000
+width = 60
+height = 60
 size = (height, width)
-i = 10000
-s = 30
-n = 1000
+i = 1000
+s = 5
 
-# Create a cProfile object
-profiler = cProfile.Profile()
-
-# Run the simulation method with profiling
-profiler.enable()
-
-init = [(2, 2)]*n
-print("\ni: ", i, " s: ", s, " n: ", n)
-framework = Framework(size, init, s, i)
+init = [(x, y) for x in range(20, 40) for y in range(20, 40)]
+print("\ni: ", i, " s: ", s)
+framework = Framework(size, init, s)
 sparse_matrices_list, took1 = framework.monte_carlo(
-    size_inclusion_random_walk_np)
+    size_exclusion_random_walk_np, i)
 
-profiler.disable()
+print("Took", took1)
 
-# Print the profiling results
-profiler.print_stats(sort='tottime')
 
-# for sparse_matrix in sparse_matrices_list:
-#     print(sparse_matrix.toarray(), "\n")
+for sparse_matrix in sparse_matrices_list:
+    matrix = sparse_matrix.toarray()
+    plt.matshow(matrix)
+    plt.show()

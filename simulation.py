@@ -6,12 +6,11 @@ import numpy as np
 
 class Framework:
 
-    def __init__(self, size, init=[], n_steps=100, n_iterations=100):
+    def __init__(self, size, init=[], n_steps=100):
 
         self.size = np.array(size, dtype=np.uint16)
         self.init = np.array(init, dtype=np.uint16)
         self.n_steps = n_steps
-        self.n_iterations = n_iterations
 
     def merge_iterations(self, array_list):
 
@@ -30,7 +29,7 @@ class Framework:
         # Convert the coo_matrix to csr_matrix if needed (sums duplicates automatically)
         return sparse_matrix.tocsr()
 
-    def monte_carlo(self, algo):
+    def monte_carlo(self, algo, n_iterations=100):
 
         start_time = time.time()
 
@@ -40,11 +39,11 @@ class Framework:
 
         # init (step 0 init sparse matrix for every iteration)
         sparse_matrix_step0 = self.merge_iterations(
-            [self.init]*self.n_iterations)
+            [self.init]*n_iterations)
         self.sparse_matrices_list.append(sparse_matrix_step0)
 
         # first step saved in next_pos_lists
-        for i in range(self.n_iterations):
+        for i in range(n_iterations):
             self.next_pos_array_list.append(algo(self.init, self.size))
 
         self.sparse_matrices_list.append(
@@ -56,7 +55,7 @@ class Framework:
         for k in range(2, self.n_steps+1):
 
             # for all iterations calculate all new position arrays
-            for i in range(self.n_iterations):
+            for i in range(n_iterations):
                 position_array = self.pos_array_list[i]
                 self.next_pos_array_list[i] = algo(position_array, self.size)
 
