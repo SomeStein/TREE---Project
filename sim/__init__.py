@@ -1,9 +1,5 @@
 
-
-# rewrite that whole thing from scratch
 # app usage:
-# define architecture (walls, obsticals, spawners, doors)
-# define init board (agent pos)
 # give rules for SF and DF
 # give agent update rules
 # from all that create Board instance
