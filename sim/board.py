@@ -1,5 +1,4 @@
 from sim.objects import Wall, Agent, Door, Obstacle, Spawner
-from sim.framework import Framework
 
 
 class Board:
@@ -105,11 +104,6 @@ class Board:
         self.max_y = max_y
         self.min_y = min_y
 
-        for y in range(min_y, max_y+1):
-            for x in range(min_x, max_x+1):
-                if self._objects[(x, y)] == []:
-                    del self._objects[(x, y)]
-
         self._architecture_str = string
         self._is_architecture_baked = True
 
@@ -144,6 +138,11 @@ class Board:
         self._populated_str = string
         self._is_populated = True
 
+        for y in range(min_y, max_y+1):
+            for x in range(min_x, max_x+1):
+                if len(self._objects[(x, y)]) == 0:
+                    del self._objects[(x, y)]
+
     def __str__(self):
         if self._is_populated:
             return self._populated_str
@@ -151,6 +150,3 @@ class Board:
             return self._architecture_str
         else:
             return "Architecture not baked jet"
-
-    def create_framework(self):
-        return Framework()
