@@ -1,3 +1,4 @@
+import time
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.animation import FuncAnimation
@@ -132,35 +133,37 @@ def seq_se_algo(agents, board_sizes):
     return new_agents
 
 
-framework = Framework((100, 100))
+framework = Framework((20, 20))
 
-framework.add_agents([(r, c) for r in range(30, 69) for c in range(30, 69)])
+framework.add_agents([(r, c) for r in range(6, 14) for c in range(6, 14)])
 
 n_steps = 100
-n_iterations = 100
+n_iterations = 10000
 
+start = time.time()
 steps_si = framework.monte_carlo(n_steps, n_iterations, si_algo)
-steps_se = framework.monte_carlo(n_steps, n_iterations, seq_se_algo)
+print(f"took: {time.time() - start} seconds")
+# steps_se = framework.monte_carlo(n_steps, n_iterations, seq_se_algo)
 
-arrays = []
-
-
-for i in range(n_steps+1):
-    arrays.append(np.abs(steps_se[i] - steps_si[i]))
+# arrays = []
 
 
-fig, ax = plt.subplots()
-cax = ax.matshow(arrays[0], vmax=0.1)
-
-# Step 4: Create the update function
+# for i in range(n_steps+1):
+#     arrays.append(np.abs(steps_se[i] - steps_si[i]))
 
 
-def update(frame):
-    cax.set_array(arrays[frame])
-    return [cax]
+# fig, ax = plt.subplots()
+# cax = ax.matshow(arrays[0], vmax=0.1)
+
+# # Step 4: Create the update function
 
 
-# Step 5: Create the animation object
-ani = FuncAnimation(fig, update, frames=len(arrays), blit=True)
+# def update(frame):
+#     cax.set_array(arrays[frame])
+#     return [cax]
 
-ani.save('matshow_animation.gif', writer='imagemagick')
+
+# # Step 5: Create the animation object
+# ani = FuncAnimation(fig, update, frames=len(arrays), blit=True)
+
+# ani.save('matshow_animation.gif', writer='imagemagick')
