@@ -143,6 +143,10 @@ n_iterations = 10000
 start = time.time()
 steps_si = framework.monte_carlo(n_steps, n_iterations, si_algo)
 print(f"took: {time.time() - start} seconds")
+
+start = time.time()
+steps_si = framework.monte_carlo(n_steps, n_iterations, seq_se_algo)
+print(f"took: {time.time() - start} seconds")
 # steps_se = framework.monte_carlo(n_steps, n_iterations, seq_se_algo)
 
 # arrays = []
