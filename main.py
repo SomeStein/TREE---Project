@@ -19,6 +19,7 @@ class Framework:
 
         for i in range(len(self.agents)+1):
             if i not in self.agents:
+
                 self.agents[i] = agent
 
     def add_agents(self, agents):
