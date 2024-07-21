@@ -97,10 +97,11 @@ def si_algo(agents, board_sizes):
 
     ids = list(agents.keys())
     random.shuffle(ids)
+    choices = random.choices(range(len(steps)), k=len(agents))
 
-    for id in ids:
+    for i, id in enumerate(ids):
         r, c = agents[id]
-        a, b = random.choice(steps)
+        a, b = steps[choices[i]]
         new_agents[id] = (r+a) % n_rows, (c+b) % n_cols
 
     return new_agents
@@ -116,10 +117,11 @@ def seq_se_algo(agents, board_sizes):
 
     ids = list(agents.keys())
     random.shuffle(ids)
+    choices = random.choices(range(len(steps)), k=len(agents))
 
-    for id in ids:
+    for i, id in enumerate(ids):
         r, c = agents[id]
-        a, b = random.choice(steps)
+        a, b = steps[choices[i]]
         new_pos = (r+a) % n_rows, (c+b) % n_cols
 
         if new_pos in new_agents.values():
@@ -137,37 +139,34 @@ framework = Framework((20, 20))
 
 framework.add_agents([(r, c) for r in range(6, 14) for c in range(6, 14)])
 
-n_steps = 100
-n_iterations = 10000
+n_steps = 10
+n_iterations = 1_000_000
 
 start = time.time()
 steps_si = framework.monte_carlo(n_steps, n_iterations, si_algo)
 print(f"took: {time.time() - start} seconds")
 
 start = time.time()
-steps_si = framework.monte_carlo(n_steps, n_iterations, seq_se_algo)
+steps_se = framework.monte_carlo(n_steps, n_iterations, seq_se_algo)
 print(f"took: {time.time() - start} seconds")
-# steps_se = framework.monte_carlo(n_steps, n_iterations, seq_se_algo)
-
-# arrays = []
 
 
-# for i in range(n_steps+1):
-#     arrays.append(np.abs(steps_se[i] - steps_si[i]))
+arrays = []
 
 
-# fig, ax = plt.subplots()
-# cax = ax.matshow(arrays[0], vmax=0.1)
+for i in range(n_steps+1):
+    arrays.append(np.abs(steps_se[i] - steps_si[i]))
 
-# # Step 4: Create the update function
+plt.matshow(arrays[1])
+plt.show()
 
+fig, ax = plt.subplots()
+cax = ax.matshow(arrays[0], vmin=0, vmax=0.1)
 
-# def update(frame):
-#     cax.set_array(arrays[frame])
-#     return [cax]
+def update(frame):
+    cax.set_array(arrays[frame])
+    return [cax]
 
+ani = FuncAnimation(fig, update, frames=len(arrays), blit=True)
 
-# # Step 5: Create the animation object
-# ani = FuncAnimation(fig, update, frames=len(arrays), blit=True)
-
-# ani.save('matshow_animation.gif', writer='imagemagick')
+ani.save('matshow_animation.gif', writer='Pillow', fps=1)
