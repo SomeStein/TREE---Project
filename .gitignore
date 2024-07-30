@@ -2,7 +2,9 @@
 test.py
 
 # data
+graphs/
 *.gif
+*.png
 
 
 # Byte-compiled / optimized / DLL files
