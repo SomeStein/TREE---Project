@@ -15,7 +15,7 @@ def create_gif_from_matrices(matrices, output_file='animation.gif', interval=200
 
     def update(frame):
         ax.clear()
-        ax.matshow(matrices[frame])
+        ax.matshow(matrices[frame], vmax=1.2, vmin=0)
         ax.set_title(f'Frame {frame + 1}')
         ax.axis('off')
 
@@ -26,8 +26,3 @@ def create_gif_from_matrices(matrices, output_file='animation.gif', interval=200
     ani.save(output_file, writer=PillowWriter(fps=1000 / interval))
     plt.close(fig)
 
-
-# Example usage:
-# Create a list of random matrices for demonstration
-matrices = [np.random.rand(10, 10) for _ in range(10)]
-create_gif_from_matrices(matrices)

@@ -101,6 +101,6 @@ class Framework:
             mat = np.zeros(self.board_sizes)
             for agent in steps_densities[k]:
                 mat[agent] = steps_densities[k][agent]
-            matrices.append(mat)
+            matrices.append(mat/n_iterations)
 
         return matrices
