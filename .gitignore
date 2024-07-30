@@ -1,7 +1,8 @@
 # specific files
 test.py
 
-
+# data
+*.gif
 
 
 # Byte-compiled / optimized / DLL files
